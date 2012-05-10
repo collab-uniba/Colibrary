@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<result>
+	<isbn>0123735564</isbn>
+	<tag/>
+	<occurrences/>
+	<user>David C. Hay "Dave"</user>
+	<review>
+
+There are maybe half a dozen or so books in my library that have defined the body of knowledge that has been the subject of my career.  All the others are interesting (or not) but not the definitive description of the subject.  It is very rare when a new one comes along.  But when one does succinctly and clearly define and describe a subject area I have been struggling to master for several years, this is worth celebrating. This is such a book. For the last several years, I have been studying OWL and the Semantic Web, recognizing that there is something there that is important. But it's been a struggle to get on top of it.  For example, the books I've found so far (and indeed, the OWL specification itself) describes the language in terms of XML.  That's ok, and I was able to understand bits and pieces of it.  And I did get the fundamental difference between semantic modeling as done in OWL and semantic modeling as I have been doing with entity/relationship modeling. But I never really felt comfortable that I "got it".This book, however, very clearly starts at the beginning and takes the reader through the steps required to understand not just the languages involved, but why they are important and why they are significant to the Semantic Web. Indeed this is the first time I can say that I really understand the semantic web.One of the reviews complains that the book doesn't go far enough.  Perhaps not.  But if you are looking for a place not just to start your education and to get a through grounding in fundamental concepts, this is the book for you.I strongly recommend this book.
+      </review>
+	<rating>0.5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss1.gif</imgrating>
+	<isbn>0123735564</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Jannes Aasman "Jans Aasman"</user>
+	<review>
+
+Around 2003 I bought my first two books about the Semantic Web and RDF. The authors of these books managed to confuse me into believing that RDF is some XML standard for knowledge representation and they basically needed an entire book to explain how to force knowledge into XML. The technology looked so painful, ugly, and wrong that I quickly gave up. A year later I met someone who explained to me that RDF (and SW) is about serializing semantic networks into triples and that reading XML/RDF is actually only for masochists. Well, that was something I did understand and I've been playing and working with RDF even since. The book by Dean and Jim is wonderful. XML/RDF is completely ignored and the book focuses on the things that you need to understand if you want to get into the Semantic Web. I'm recommending it to all our customers and I guess we real soon will need a second edition. I'm also looking forward to their next book: the Semantic Web for the Advanced Ontologist :-)
+      </review>
+	<rating>0.5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss1.gif</imgrating>
+	<isbn>0123735564</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Henry Story "bblfish"</user>
+	<review>
+
+Finally a book that explains the key aspects of the Semantic Web in easy to understand language, with well thought out examples and taking a step by step approach to this eminently stackable technology. No RDF/XML in the whole book! This will save all who get started on the semantic web years of work hunting down specs, and will give them the right initial intuitions. A God send!  Buy one for yourself and one for your friends too :-)
+      </review>
+	<rating>0.5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss1.gif</imgrating>
+	<isbn>0123735564</isbn>
+	<tag/>
+	<occurrences/>
+	<user>C. Schumacher</user>
+	<review>
+
+There is a great need for a book like this, and the authors are well-credentialed, but unfortunately, this book is more like an introduction than a craftsman's resource.  It reads like a first draft with typos, belabored repetitive text, and some odd examples.  There is almost no discussion of internationalization, security, performance, or tricky basic types such as dates, times, or currency.  More discussion of SPARQL would have been useful, as well as discussion of what should go in the model vs. what should be queried out.  The chapter "Good and Bad Modeling Practices" was a particular let-down.  A sharp, thoughtful, deeper book on this topic would really help the field.
+      </review>
+	<rating>0.5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss1.gif</imgrating>
+	<isbn>0123735564</isbn>
+	<tag/>
+	<occurrences/>
+	<user>G. Niram</user>
+	<review>
+
+It used to be that the only books about the Semantic Web were either theoretical treatises requiring advanced mathematical training or marketing pep-rallies.  Semantic Web for the Working Ontologist fills the gap in between by providing a down-to-earth description of this important technology, describing how it can be used to provide real business value.  Allemang and Hendler accomplish this without relying on a lot of mathematical mumbo-jumbo--the first mention of the confusing OWL 'species' doesn't come until Chapter 13.  You can get a lot of work done before you even start to worry about the technical details of logic.Parts of the book are accessible to a general audience, and the whole book is accessible to anyone with some sort of analytic background, not just logicians and computer scientists.  This book has something for beginners (even if this is the first time you've heard of the semantic web) as well as for experienced practitioners.
+      </review>
+	<rating>0.5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss1.gif</imgrating>
+	<isbn>0123735564</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Steven Forth</user>
+	<review>
+
+I picked up this book at SemTech 2008 where it had its launch, but only got around to reading it this winter. I wish I had read it earlier as it is tremendously helpful. I have learned what I know of the semantic web by reading the W3C application and building things, primarily using Protégé and the Semantic MediaWiki with Halo. I have also been part of semantic web study groups in Vancouver BC and Cambridge MA. These have all been useful but I like to include books in my learning programs and until the Semantic Web for the Working Ontologist I had not found anything that really helped. John Sowa's wonderful book on Knowledge Representation (is this out of print?) helped with the intellectual foundations, and got me reading Frege, but I needed something that talked in RDF, RDFS and OWL. This book does.One reason this is such a good book is that the authors have practical experience teaching semantic web modeling (I think I want to take a course) and this teaching experience informs the book. Another strength is that they relate semantic web modeling to object oriented programming and call out the differences. Some books on the semantic web enter from a relational database frame of reference. This can also be useful, especially if one comes from the relational world and actually understands the relational model, but my own background is from OO and I find the relational approach to the semantic web irritating (this reflects my own prejudices, if you come from the relational camp you may want a book that can relate semantic web to the relational model).Dean Allemang and Jim Hendler's book reinforces the key design rules of the semantic web, and two of them are worth repeating here (and anytime one has a chance). 1. AAA - the semantic web allows Anyone to say Anything about Any topic. 2. A model means what it allows you to infer and inferred triples have the same status as asserted triples. The latter reminds me of Wittgenstein and his insistence (in the Philosophical Investigations) that the meaning of a word depends on how it is used. The meaning of a model depends on what it allows us to infer. This book is not perfect, and I am only giving it four stars as I want to encourage the authors to bring out a second edition. What would I like to see? A quick explanation of the semantic web layer cake. More real world models and applications. And more on SAPRQL, the pattern search language of the semantic web. Some of the expository writing still needs work, at least for me. I had to read several of the OWL sections many times and could have used more examples. The two case studies in OWL in the Wild (the Federal Enterprise Architecture Reference Model Ontology and the National Cancer Institute Ontology) were not as compelling as I had hoped and I think the next edition will need a third example. On the other hand, I hope the next edition is shorter!I hope that someone, perhaps these authors, will complement this book with a volume (and website) that explores some of the best models, annotates them, and shows how they can be applied. 
+      </review>
+	<rating>0.5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss1.gif</imgrating>
+	<isbn>0123735564</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Jerre McQuinn</user>
+	<review>
+
+This is the best book to date that I have read to expalain RDF, RDFS, and OWL to someone with a walking aquaintance with ontologies.  It begins at the begining and proceeds through increasingly more difficult material to provide the reader a look at the inferential power of OWL.  The examples are conceptual and sufficiently illustrative that the reader can see at each step the incremental value of each component of the "semantic stack."  Finally this book turned on the lights in an orderly manner to illuminate this fascinating subject.
+      </review>
+	<rating>0.5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss1.gif</imgrating>
+	<isbn>0123735564</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Eddy Vanderlinden</user>
+	<review>
+
+Being overwhelmed with scientific and technical publications, finally a book where the practician is waiting for.This book shows with examples you can model data while keeping the feet on earth with practical application of the relevant W3C recommendations.I learned why we had to apply the rules cited in many documents on tools and in publications. Not by simply quoting the source recommendation, but by explaining the grounding of that recommendation. This became even clearer through the sequence of the treated subjects, building understanding on top of each preceding chapter: RDF, RDFS, RDFS plus, OWL, OWL levels.If we make abstraction of the web environmental conditions, this work is also very useful in general knowledge management.
+      </review>
+	<rating>0.5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss1.gif</imgrating>
+	<isbn>0123735564</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Cecil O. Lynch</user>
+	<review>
+
+This is an excellent textbook with very good coverage of the basic topics of the semantic Web languages.  It is well-written and organized logically.  If there were anything I would change for an introductory text it would be a little more coverage of owl 2.0 restrictions.  I plan to use the text in my class on knowledge modeling this year.
+      </review>
+	<rating>0.5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss1.gif</imgrating>
+</result>

@@ -1,0 +1,304 @@
+<?php
+
+	// Spegni tutte le segnalazioni d'errore 
+	// commentare in fase di modifica o durante
+	// il testing
+	error_reporting(0);
+			 
+	// codice che indica quale errore è avvenuto durante la generazione del foglio XML/RDF
+	// se error_code è zero significa che non c'è nessun errore
+	$error_code = 0;  
+	 
+	// porzione del foglio XML da generare, contenente i messaggi di errore
+	$error_xml_code = "";
+	include("_params.php");
+	include("utility_bib.php");
+	include("utility_cite.php");
+	include("utility_acm.php");
+	include("rdf_service.php");
+
+	// recupera i parametri dalla URI
+	$url=$_SERVER['REQUEST_URI'];
+	$pos=strpos($url,'mashup/');
+	$parte = substr($url,$pos+7,strlen($url));
+
+	if (strpos($parte,'/')==false){
+		$interhash=substr($parte,0,strlen($parte));
+		$datatype='both';
+		$socialtype='all';
+	}
+	else {
+		$primoslash=strpos($parte,'/');
+		$interhash=substr($parte,0,$primoslash);
+		$parte2=substr($parte,$primoslash+1,strlen($parte));
+		$array=split('/',$parte2);
+		if ($array[0]=='social' && $array[1]==NULL) {
+			$datatype='social';
+			$socialtype='all';
+		} 
+		else {
+			$datatype=$array[0];
+			$socialtype=$array[1];
+			$socialdatatype=$array[2];
+		}
+	}
+	
+	 
+	// verifico se il file è già in memoria
+	/* if (file_exists('o_'.$interhash.'.xml')){
+		if ($datatype=='both') { 
+			$data=file_get_contents('o_'.$interhash.'.xml');
+			header('Content-Type: text/xml');
+			echo $data;
+		}
+		else 
+			filterrdf($datatype,$socialtype,$interhash,$socialdatatype);
+	}
+	else {	 */ 
+		// cancello un file precedente se esiste
+		/* $pattern='#o_[A-Z0-9a-z]{32}\.xml#i';
+		$a=scandir('.');
+		foreach ($a as $file){
+			if (preg_match($pattern, $file, $matches)) { 
+				if (file_exists($matches[0])) unlink($matches[0]); 
+			}
+		} */
+
+		// dall'interhash recupera il titolo
+		$title=interhash_to_title($interhash);
+		// titolo inserito nel form con doppi apici avanti e dietro
+		$translated_title= translateTitle($title);
+
+		// funzioni per recuperare i dati da bibsonomy
+		$bibsonomyXML = getBibsonomyXMLApi($translated_title);
+		 
+		// funzioni per recuperare i dati da citeulike
+		$Citeulike_resource_page=getCiteulikeResourcePage($translated_title);
+		$Citeulike_bibXML=getCiteulikeBibtex($Citeulike_resource_page);
+		$Citeulike_tagsXML=getCiteulikeTags($Citeulike_resource_page);
+		$Citeulike_userXML=getCiteulikeUsers($Citeulike_resource_page);
+		$Citeulike_reviewXML=getCiteulikeReviews($Citeulike_resource_page);
+		$Citeulike_revArray=getCiteulikeReviewsArray($Citeulike_reviewXML);
+		$CiteulikeXML=getCiteulikeXML($Citeulike_bibXML,$Citeulike_tagsXML,$Citeulike_userXML,$Citeulike_revArray,$Citeulike_resource_page);
+
+		// funzioni per recuperare i dati da acm (accesso al sito di acm molto lento)
+		$Acm_resource_page=verificaACM($translated_title);
+		// Acm a differenza di cite e bibsonomy se non ha la risorsa genera comunque una pagina di articoli; per evitare di andare a prendere dati inutili
+		// faccio un controllo sul titolo e verifico se effettivamente la risorsa è presente o meno	
+		if ($Acm_resource_page!='error'){
+			$Acm_page=downloadacm($Acm_resource_page);
+			$abstract=getAcmAbstract($Acm_page);
+			$keywordsXML=getAcmKeywords($Acm_page);
+			$keywords=grab_tags_acm($keywordsXML);
+			$Acm_bibtex_page=getAcmBibtexUrl($Acm_page);
+			$Acm_bibtext=getAcmBibtex($Acm_bibtex_page);
+			$Acm_bibtexXML=getAcmBibtexXML($Acm_bibtext);
+			$AcmXML=getAcmXML($Acm_bibtexXML,$Acm_resource_page,$keywords,$abstract); 
+		} else 
+			generateError(10);
+
+		// generazione RDF
+		rdf($bibsonomyXML,$CiteulikeXML,$AcmXML,$title,$interhash,$datatype,$socialtype,$socialdatatype);
+		// ripulisce la cartella dai file XML intermedi
+		cleanDIR();
+	
+	//}// fine if file_exists
+
+
+// ----------------------------------------------------------------------------------------
+				
+function cleanDIR(){
+	unlink('Acm_bib.xml');
+	unlink('Acm_bibt.txt');
+	unlink('Acm_page.html');
+	unlink('Acm_tag.xml');
+	unlink('bibsonomy_api.xml');
+	unlink('bibsonomy_tag.xml');
+	unlink('Citeulike_bib.xml');
+	unlink('Citeulike_rev.xml');
+	unlink('Citeulike_tags.xml');
+	unlink('Citeulike_users.xml');
+	unlink('info_Acm.xml');
+	unlink('info_bibsonomy.xml');
+	unlink('info_Citeulike.xml');
+}//fine
+
+
+//this function generates the xml code for the errors given the code of the error
+function generateError($code){
+	$error_file="ErrorCode.xml";
+	$fp=fopen($error_file,'w');
+	global $error_xml_code,$error_code;					
+	$error_code = $code;
+	switch ($code){
+		case 1: $message = "Resource's not found on www.bibsonomy.org";           break;
+		case 2: $message = "Resource's Bibtex not found on www.bibsonomy.org";    break;
+		case 3: $message = "The data parameter is unacceptable";                  break;				
+		case 4: $message = "The social_type parameter is unacceptable";           break;
+		case 5: $message = "The tag_limit parameter is unacceptable";             break;
+		case 6: $message = "The tag_source parameter is unacceptable";            break;				
+		case 7: $message = "An internal error has occurred";                      break;
+		case 8: $message = "Resource's not found on www.citeulike.org";           break;
+		case 9: $message = "Resource's Bibtex not found on www.citeulike.org";    break;
+		case 10: $message = "Resource's not found on www.portal.acm.org";         break;
+		case 11: $message = "Resource's Bibtex not found on www.portal.acm.org";  break;
+		case 12: $message = "The user_source parameter is unacceptable";          break;
+		case 13: $message = "Resource not found";                                 break;
+	}
+	$error_xml_code .= "<error>\n <code>".$error_code."</code>\n"; 
+	$error_xml_code .= " <message>".$message."</message>\n</error>\n";
+	writeError($error_xml_code);
+}
+        				 
+function writeError($xml){
+	$error_file="ErrorCode.xml";
+	$fp=fopen($error_file,'w');
+	$total="<errors>\n".$xml."</errors>\n";
+	$total="<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n".$total;
+	fwrite($fp,$total);
+	fclose($fp);
+}
+ 
+ // mette al titolo inserito i doppi apici avanti e dietro
+function translateTitle($code){
+	$new_code = str_replace(" ","+",$code);
+	$new_code = '"'.$new_code.'"';
+	//echo $new_code;
+	return $new_code; 
+}
+ 
+  
+ // recupera il titolo dato l'interhash
+function  interhash_to_title($interhash){
+
+	$url='http://www.bibsonomy.org/bib/bibtex/'.$interhash;
+	$fp=@fopen($url,'rb');
+	$contents = "";
+	if(!$fp){
+		generateError(1);
+		return FALSE;
+	}
+	else {
+		while (!feof($fp)) {
+			$contents .=fread($fp, 4096); 
+		} 
+		fclose($fp);
+	}
+
+	$pos=strpos($contents,' {');
+	$parte=strstr($contents,' {');
+	$pos=strpos($parte,' {');
+	$pos2=strpos($parte,'}');
+	$parte=substr($parte,$pos+2,$pos2-2);
+	return $parte;
+
+}//fine
+  
+
+
+function rdf($bibXML,$citeXML,$acmXML,$title,$interhash,$datatype,$socialtype,$socialdatatype){
+	
+	include_once(RDFAPI_INCLUDE_DIR . "RdfAPI.php"); 
+
+	// array tag da bibsonomy
+	$local_tag_bib='bibsonomy_tag.xml';
+	$array_occurrence_bib=grab_tags_bibsonomy_occurr($local_tag_bib);
+	$array_label_bib=grab_tags_bibsonomy_label($local_tag_bib);
+	$array_href_bib=grab_tags_bibsonomy_href($local_tag_bib);
+
+	// array tag da citeulike
+	$local_tag_cite='Citeulike_tags.xml';
+	$array_label_cite=grab_tags_Citeulike_label($local_tag_cite);
+	$array_href_cite=grab_tags_Citeulike_href($local_tag_cite);
+	$array_occurrence_cite=array();
+	for ($i=0;$i<count($array_label_cite);$i++)
+		array_push($array_occurrence_cite,"1 post");
+
+	// array tag da acm
+	$local_tag_acm='Acm_tag.xml';
+	$array_label_acm=grab_tags_acm($local_tag_acm);
+	$root=simplexml_load_file($local_tag_acm);
+	$array_href_acm=array();
+	foreach($root->a as $href)
+		array_push($array_href_acm,'http://portal.acm.org');
+	$array_occurrence_acm=array();
+	for ($i=0;$i<count($array_label_acm);$i++)
+		array_push($array_occurrence_acm,"1 post");
+
+	// array globale di tag
+	$array_label=array_merge_recursive($array_label_acm,$array_label_cite,$array_label_bib);
+	$array_occurr=array_merge_recursive($array_occurrence_acm,$array_occurrence_cite,$array_occurrence_bib);
+	$array_href=array_merge_recursive($array_href_acm,$array_href_cite,$array_href_bib);
+
+	$total_lab_href=array_combine($array_label,$array_href);
+	$total_lab_occ=array_combine($array_label,$array_occurr);
+
+	// recuperto gli user da bibsonomy e citeulike
+	$local_user_bib='bibsonomy_api.xml';
+	$local_user_cite='Citeulike_users.xml';
+	$total_user_citeulike=grab_users_Citeulike_label($local_user_cite);
+	$total_user_bibsonomy=grab_users_bibsonomy($local_user_bib);
+
+	//rev da citeulike
+	$local_rev='Citeulike_rev.xml';
+	$array_rev=getCiteulikeReviewsArray($local_rev);
+
+	$foundBIB="no";
+	$foundCITE="no";
+	$foundACM="no";
+
+	$root_bib=simplexml_load_file($bibXML);
+	$root_cite=simplexml_load_file($citeXML);
+	$root_acm=simplexml_load_file($acmXML);
+
+	$title_bib=$root_bib->title;
+	$title_cite=$root_cite->title;
+	$title_acm=$root_acm->title;
+
+	// verifico in quali comunità è stato trovato l'articolo
+	if ($title_bib!='') $foundBIB="si";
+	if ($title_cite!='') $foundCITE="si";
+	if (stripos(trim($title),trim($title_acm))!== false) $foundACM="si";
+
+	if ($foundACM=="no") {
+		$array_label=array_merge_recursive($array_label_cite,$array_label_bib);
+		$array_occurr=array_merge_recursive($array_occurrence_cite,$array_occurrence_bib);
+		$array_href=array_merge_recursive($array_href_cite,$array_href_bib);
+
+		$total_lab_href=array_combine($array_label,$array_href);
+		$total_lab_occ=array_combine($array_label,$array_occurr);
+	}
+
+	if (($foundBIB=="si") && ($foundCITE=="no") && ($foundACM=="no")) {  
+		rdf1($root_bib,$interhash,$total_lab_href,$total_lab_occ,$total_user_bibsonomy,$datatype,$socialtype,$socialdatatype);  
+	}
+	else if (($foundBIB=="no") && ($foundCITE=="si") && ($foundACM=="no")) {
+		rdf2($root_cite,$interhash,$total_lab_href,$total_lab_occ,$total_user_citeulike,$array_rev,$datatype,$socialtype,$socialdatatype);  
+	}
+	else if (($foundBIB=="no") && ($foundCITE=="no") && ($foundACM=="si")) {
+		rdf3($root_acm,$interhash,$total_lab_href,$total_lab_occ,$datatype,$socialtype,$socialdatatype);
+	}
+	else if (($foundBIB=="si") && ($foundCITE=="si") && ($foundACM=="no")) {
+		rdf4($root_bib,$root_cite,$interhash,$total_lab_href,$total_lab_occ,$total_user_bibsonomy,$total_user_citeulike,$array_rev,$datatype,$socialtype,$socialdatatype);
+	}
+	else if (($foundBIB=="si") && ($foundCITE=="no") && ($foundACM=="si")) {
+		rdf5($root_bib,$root_acm,$interhash,$total_lab_href,$total_lab_occ,$total_user_bibsonomy,$datatype,$socialtype,$socialdatatype);
+	}
+	else if (($foundBIB=="no") && ($foundCITE=="si") && ($foundACM=="si")) {
+		rdf6($root_cite,$root_acm,$interhash,$total_lab_href,$total_lab_occ,$total_user_citeulike,$array_rev,$datatype,$socialtype,$socialdatatype);
+	}
+	else if (($foundBIB=="si") && ($foundCITE=="si") && ($foundACM=="si")) {
+		rdf7($root_bib,$root_cite,$root_acm,$interhash,$total_lab_href,$total_lab_occ,$total_user_bibsonomy,$total_user_citeulike,$array_rev,$datatype,$socialtype,$socialdatatype);
+	}
+	else if (($foundBIB=="no") && ($foundCITE=="no") && ($foundACM=="no")) {
+		// risorsa non trovata
+		generateError(13);
+		$local='ErrorCode.xml';
+		header('Content-Type: text/xml');
+		$data=file_get_contents($local);
+		echo $data;
+		unlink($local);
+	} 
+}
+
+?>

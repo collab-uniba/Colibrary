@@ -1,0 +1,39 @@
+a {
+	text-decoration: none;
+	color: #009900;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+}
+
+a:hover {
+	color: #00CC66;
+}
+
+
+body, table, tr, td, div {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+}
+
+.Stile1 {
+	color: #009900;
+}
+
+.title_accordion {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #9966CC;
+	text-decoration: none;
+}
+
+a.back {
+	text-decoration: none;
+	color: #0000FF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+}
+
+.tags {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #000000;
+	cursor: pointer;	
+}

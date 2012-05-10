@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Colibrary Web API</title>
+<script charset="utf-8" id="injection_graph_func" src="Prompter%20%20a%20PeRsonal%20sOcial%20and%20seMantic%20%28Proper%29%20Tag%20recommendER_files/injection_graph_func.js"></script></head><body>
+<h2><big>Colibrary Web API</big></h2>
+<hr color="blue" noshade="noshade" size="6">
+<h3><big>Restful WebServices for retrieving bibliographic and social information about books as Linked Data</big></h3>
+<font size="4">
+Below it is prensented the interface to invoke the web services.<br/>
+Parameters are included within curly brackets. The ISBN parameter is always mandatory.<br/>
+<br>
+<hr color="blue" noshade="noshade" size="6">
+<font size="4">
+<ul>
+	<li style="padding-bottom: 10pt;"><b>Full description of a book</b> --- http://collab.di.uniba.it/Colibrary/books/mashup/{ISBN}<br/><br/>
+		Return a full RDF description of the book with the ISBN given as input. It includes both bibliographic and social description<br/>
+		<b><i>Example: </i></b> <i>http://collab.di.uniba.it/Colibrary/books/mashup/0671028464</i>
+	</li>
+	<br/>	
+	<li style="padding-bottom: 10pt;"><b>Bibliographic description of a book</b> --- http://collab.di.uniba.it/Colibrary/books/mashup/{ISBN}/biblio<br/><br/>
+		Return an RDF description concerning only bibliographic data about the book with the ISBN given as input<br/>
+		<b><i>Example: </i></b> <i>http://collab.di.uniba.it/Colibrary/books/mashup/0671028464/biblio</i>
+	</li>
+	<br/>
+	<li style="padding-bottom: 10pt;"><b>Social description of a book</b> --- http://collab.di.uniba.it/Colibrary/books/mashup/{ISBN}/social<br/><br/>
+		Return an RDF description concerning only social data about the book with the ISBN given as input. It includes description of tags, reviews and users related to the book<br/>
+		<b><i>Example: </i></b> <i>http://collab.di.uniba.it/Colibrary/books/mashup/0671028464/social</i>
+	</li>
+	<br/>
+	<li style="padding-bottom: 10pt;"><b>Tags' description of a book</b> --- http://collab.di.uniba.it/Colibrary/books/mashup/{ISBN}/social/tags<br/><br/>
+		Return an RDF description for concerning tags about the book with the ISBN given as input<br/>
+		<b><i>Example: </i></b> <i>http://collab.di.uniba.it/Colibrary/books/mashup/0671028464/social/tags</i>
+	</li>
+	<br/>
+	<li style="padding-bottom: 10pt;"><b>Reviews' description of a book</b> --- http://collab.di.uniba.it/Colibrary/books/mashup/{ISBN}/social/reviews<br/><br/>
+		Return an RDF description concerning only reviews about the book with the ISBN given as input<br/>
+		<b><i>Example: </i></b> <i>http://collab.di.uniba.it/Colibrary/books/mashup/0671028464/social/reviews</i>
+	</li>
+	<br/>
+	<li style="padding-bottom: 10pt;"><b>Users' description of a book</b> --- http://collab.di.uniba.it/Colibrary/books/mashup/{ISBN}/social/users<br/><br/>
+		Return an RDF description concerning users which wrote a review about the book with the ISBN given as input<br/>
+		<b><i>Example: </i></b> <i>http://collab.di.uniba.it/Colibrary/books/mashup/0671028464/social/users</i>
+	</li>
+	<br/>
+		<li style="padding-bottom: 10pt;"><b>Description of a single tag associated to a book</b> --- http://collab.di.uniba.it/Colibrary/books/mashup/{ISBN}/social/tags/{tagname}<br/><br/>
+		Return an RDF description of the tag with a given name if associated to the book with the ISBN given as input</i><br/>
+				<b><i>Example: </i></b> <i>http://collab.di.uniba.it/Colibrary/books/mashup/0671028464/social/tags/Canada</i>
+	</li>
+		<br/>
+	<li style="padding-bottom: 10pt;"><b>Description of a single review associated to a book</b> --- http://collab.di.uniba.it/Colibrary/books/mashup/{ISBN}/social/reviews/{reviewcode}<br/><br/>
+		Return an RDF description of the review with a given review-code if associated to the book with the ISBN given as input</i><br/>
+		The review-code is the md5 code generated using in input the name of the reviewer and text of the review.<br/>
+				<b><i>Example: </i></b> <i>http://collab.di.uniba.it/Colibrary/books/mashup/0671028464/social/reviews/efbd18e747a601306cc2d6234e5f3538</i>
+	</li>
+		<br/>
+		<li style="padding-bottom: 10pt;"><b>Description of a single user associated to a book</b> --- http://collab.di.uniba.it/Colibrary/books/mashup/{ISBN}/social/users/{username}<br/><br/>
+		Return an RDF description of the user with a given username if associated to the book with the ISBN given as input</i><br/>
+				<b><i>Example: </i></b> <i>http://collab.di.uniba.it/Colibrary/books/mashup/0671028464/social/users/Muzzorola</i>
+	</li>
+	
+</ul></font>
+</body></html>

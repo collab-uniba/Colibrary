@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<result>
+	<isbn>047041801X</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Sujit Pal "Sujit Pal"</user>
+	<review>
+
+This book provides a very thorough and much needed introduction to the tools and techniques of Semantic Web Programming. The field is relatively new to industry programmers, but there has been much work in academia on it, so there are a plethora of (open-source) tools and frameworks available if you know what to look for. The book provides the pointers necessary for doing this. It attempts to cover a lot of ground, so if, like me, you've been doing this stuff for a while by reading up bits and pieces off the Internet, or even if you are a moderately skilled Java programmer, parts of it will appear boring and redundant. However, after reading the book, I have come away with a much better understanding and knowledge of the Semantic Web, and its associated tools and techniques, as well as a few new ideas. Definitely worth a read!
+      </review>
+	<rating>5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss10.gif</imgrating>
+	<isbn>047041801X</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Brian D. Eubanks</user>
+	<review>
+
+There have been a few good Semantic Web books out recently, but this is the first one I've seen that is written with the software developer in mind. The authors cover a wide range of topics, including RDF data mapping, ontologies, reasoning, spatiotemporal modeling, patterns, best practices, and Java-based tools. The descriptions of the many Semantic Web tools, environments, and services were also useful to me. It is becoming more difficult to select the right tool for the task from the many available options.This book should appeal to the programmer who wants to apply semantic technologies, as it has some detailed code examples. However, those without a programming background who are looking to apply semantic tools should probably start with one of the other books.
+      </review>
+	<rating>5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss10.gif</imgrating>
+	<isbn>047041801X</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Charles R. Hale</user>
+	<review>
+
+This book is the event that will move the Semantic Web into the real world from university research labs. It is an absolute must have for anyone who is interested in the Semantic Web, whether one is a novice or an expert.Very well written and thorough in the subjects it covers. 
+      </review>
+	<rating>5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss10.gif</imgrating>
+</result>

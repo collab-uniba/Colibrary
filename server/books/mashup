@@ -1,0 +1,286 @@
+<?php
+	include("_functions.php");
+	include("_params.php");
+	include(RDFAPI_INCLUDE_DIR . "RdfAPI.php"); 
+	include("rdf_function.php");
+	
+	// recupera i parametri dalla URI
+	$url = $_SERVER['REQUEST_URI'];
+	$pos = strpos($url, 'mashup/');
+	$parte = substr($url, $pos + 7, strlen($url));
+
+	if (strpos($parte,'/') == false) {
+		$isbn = substr($parte, 0, strlen($parte));
+		$datatype = 'both';
+		$socialtype = 'all';
+		$socialdatasource = 'all';
+		$request_valid = true;
+	}
+	else {
+		$datatype = '';
+		$socialtype = '';
+		$socialdatasource = '';
+		$primoslash = strpos($parte, '/');
+		$isbn = substr($parte, 0, $primoslash);
+		$parte2 = substr($parte, $primoslash + 1, strlen($parte));
+		$array = split('/', $parte2);
+		if ($array[0] != 'biblio' && $array[0] != 'social') {
+			generate_error(2);
+			$request_valid = false;
+		} 
+		else {
+			if ($array[0] == 'social' && count($array) == 1) {
+				$datatype = 'social';
+				$socialtype = 'all';
+				$socialdatasource = 'all';
+				$request_valid = true;
+			} 
+			else {
+				$datatype = $array[0];
+				$request_valid = true;
+				if (count($array) > 1) {  
+					if ($array[1] != 'tags' && $array[1] != 'reviews' && $array[1] != 'users') {
+						generate_error(2);
+						$request_valid = false;
+					} 
+					else {
+						$socialtype = $array[1];
+						if (count($array) >= 3) {
+							if ($array[1] == 'reviews' && $array[2] == 'users') {
+								$socialtype = 'reviews_users';
+								/* if (isset($array[3]))
+									$socialdatasource = $array[3];
+								else */
+									$socialdatasource = 'all';
+								/* if ($socialdatasource != 'all' && $socialdatasource != 'anobii' && $socialdatasource != 'amazon' && $socialdatasource != 'librarything') {
+									generate_error(2);
+									$request_valid = false;
+								} else
+									$request_valid = true;  */
+							} 
+							else {	
+								$socialtype = $array[1];
+								if (isset($array[2]))
+									$socialdatasource = $array[2];
+							}
+						} else 
+							$socialdatasource = 'all';															
+					}
+					
+				} else {
+					$socialtype = 'all';
+					$socialdatasource = 'all';
+				}
+			}
+		}
+	}
+	if (!$request_valid) {
+		$contents = file_get_contents('ErrorCode.xml');	
+	}
+	else { 
+		$biblio_xml = getBiblioByISBN($isbn);
+		
+		if ($biblio_xml == false) 
+			$contents = file_get_contents('ErrorCode.xml');				
+		else {
+			$model = getRDFHeader($isbn, $datatype, $socialtype, $socialdatasource);
+			
+			//recupero info bibliografiche
+			if ($datatype != "social") {
+				$info_biblio = @simplexml_load_string($biblio_xml);
+				$model_biblio = getRDFBiblio($info_biblio, $isbn);
+				$model->addModel($model_biblio);
+			}
+			
+			//recupero info sociali
+			if ($datatype != "biblio") { 
+				if ($socialtype == "tags" || $socialtype == "all") {
+					//recupero tags da Anobii	
+					$s = array('&');
+					$r = array('&amp;');
+					//if ($socialdatasource != "amazon" && $socialdatasource != "librarything") {
+						$page =  getTagsAnobii($isbn); 
+						$tags_anobii = getTags($page);
+						$occurrence_anobii = getOccurrences($page);
+						$ref_anobii = array();
+						for ($i = 0; $i < count($tags_anobii); $i++)							
+							array_push($ref_anobii, "http://www.anobii.com/tags/" . str_replace($s, $r, $tags_anobii[$i]));	 
+					/* }
+					else {
+						$tags_anobii = array();
+						$occurrence_anobii = array();
+						$ref_anobii = array();
+					} */
+					
+					//recupero tags da Amazon.com	
+					//if ($socialdatasource != "anobii" && $socialdatasource != "librarything") {
+						$page =  getTagsAmazon($isbn); 
+						$tags_amazon = getTags($page);
+						$occurrence_amazon = getOccurrences($page);
+						$ref_amazon = array();
+						for ($i = 0; $i < count($tags_amazon); $i++)							
+							array_push($ref_amazon, "http://www.amazon.com/gp/tagging/items-tagged-with?tag=" . str_replace($s, $r, $tags_amazon[$i])); 
+					/* } 
+					else {
+						$tags_amazon = array();
+						$occurrence_amazon = array();
+						$ref_amazon = array();
+					} */
+					
+					//recupero tags da LibraryThing	
+					//if ($socialdatasource != "anobii" && $socialdatasource != "amazon") {
+						$page =  getTagsLibraryThing($isbn); 
+						$tags_lt = getTags($page);
+						$occurrence_lt = getOccurrences($page);
+						$ref_lt = array();
+						for ($i = 0; $i < count($tags_lt); $i++)
+							array_push($ref_lt, "http://www.librarything.com/tag/" . str_replace($s, $r, $tags_lt[$i])); 
+					/* }
+					else {
+						$tags_lt = array();
+						$occurrence_lt = array();
+						$ref_lt = array();
+					} */
+					$array_tag = array_merge_recursive($tags_anobii, $tags_amazon, $tags_lt);
+					$array_occurs = array_merge_recursive($occurrence_anobii, $occurrence_amazon, $occurrence_lt);
+					$array_ref = array_merge_recursive($ref_anobii, $ref_amazon, $ref_lt);
+					if (count($array_tag)>0) {
+						$total_tags = array_combine($array_tag, $array_ref);
+						$total_occurs = array_combine($array_tag, $array_occurs);
+					}
+					else {
+						$total_tags = array();
+						$total_occurs = array();
+					}						
+					
+					$tag_model = getRDFTag($total_tags, $total_occurs, $isbn);
+					$model->addModel($tag_model);
+				}
+				if ($socialtype == "users" || $socialtype == "reviews_users" || $socialtype == "all") { 
+					//recupero reviews da Anobii	
+					//if ($socialdatasource != "amazon" && $socialdatasource != "librarything") {
+						$page =  getReviewsAnobii($isbn); 
+						$users_anobii = getUsers($page); 
+						$ref_user_anobii = array();
+						for ($i = 0; $i < count($users_anobii); $i++)
+							array_push($ref_user_anobii, "http://www.anobii.com/" . $users_anobii[$i]);
+					/* } 
+					else {
+						$users_anobii = array();
+						$ref_user_anobii = array();				
+					} */
+				
+					//recupero reviews da Amazon.com
+					//if ($socialdatasource != "anobii" && $socialdatasource != "librarything") {
+						$page = getReviewsAmazon($isbn, 1); 
+						$users_amazon = getUsers($page);  
+						$ref_user_amazon = array();
+						for ($i = 0; $i < count($users_amazon); $i++)
+							array_push($ref_user_amazon, "http://www.amazon.com/gp/pdp/search?keywords=" . $users_amazon[$i]);
+					/* }
+					else {
+						$users_amazon = array();  
+						$ref_user_amazon = array();
+					} */
+				
+					//recupero reviews da LibraryThing			
+					//if ($socialdatasource != "anobii" && $socialdatasource != "amazon") {
+						$page =  getReviewsLibraryThing($isbn); 
+						$users_lt = getUsers($page); 
+						$ref_user_lt = array();
+						for ($i = 0; $i < count($users_lt); $i++)
+							array_push($ref_user_lt, "http://www.librarything.com/profile/" . $users_lt[$i]);
+					/* } 
+					else {
+						$users_lt = array(); 
+						$ref_user_lt = array();
+					} */
+				
+					$array_users = array_merge_recursive($users_anobii, $users_amazon, $users_lt);			
+					$array_ref_user = array_merge_recursive($ref_user_anobii, $ref_user_amazon, $ref_user_lt);
+					
+					$model_user = getRDFUser($array_users, $array_ref_user, $isbn);
+					$model->addModel($model_user);
+				}	
+				if ($socialtype == "reviews" || $socialtype == "reviews_users" || $socialtype == "all") {
+					//recupero reviews da Anobii	
+					//if ($socialdatasource != "amazon" && $socialdatasource != "librarything") {
+						$page =  getReviewsAnobii($isbn); 
+						$reviews_anobii = getReviews($page); 
+						$users_anobii = getUsers($page); 
+						$ratings_anobii = getRatings($page);  
+						$maxratings_anobii = getMaxRatings($page);  
+						$minratings_anobii = getMinRatings($page);  
+					/* } 
+					else {
+						$reviews_anobii = array();
+						$users_anobii = array();
+						$ratings_anobii = array();
+						$maxratings_anobii = array();
+						$minratings_anobii = array();			
+					} */
+				
+					//recupero reviews da Amazon.com
+					//if ($socialdatasource != "anobii" && $socialdatasource != "librarything") {
+						$page = getReviewsAmazon($isbn, 1); 
+						$reviews_amazon = getReviews($page);  
+						$users_amazon = getUsers($page);  
+						$ratings_amazon = getRatings($page); 
+						$maxratings_amazon = getMaxRatings($page); 
+						$minratings_amazon = getMinRatings($page); 						
+					/* }
+					else {
+						$reviews_amazon = array();  
+						$users_amazon = array();  
+						$ratings_amazon = array(); 
+						$maxratings_amazon = array(); 
+						$minratings_amazon = array(); 
+					} */
+				
+					//recupero reviews da LibraryThing			
+					//if ($socialdatasource != "anobii" && $socialdatasource != "amazon") {
+						$page =  getReviewsLibraryThing($isbn); 
+						$reviews_lt = getReviews($page);  
+						$users_lt = getUsers($page); 
+						$ratings_lt = getRatings($page); 
+						$maxratings_lt = getMaxRatings($page); 
+						$minratings_lt = getMinRatings($page); 
+					/* } 
+					else {
+						$reviews_lt = array();  
+						$users_lt = array(); 
+						$ratings_lt = array(); 
+						$maxratings_lt = array(); 
+						$minratings_lt = array(); 
+					} */
+				
+					$array_users = array_merge_recursive($users_anobii, $users_amazon, $users_lt);								
+					$array_rev = array_merge_recursive($reviews_anobii, $reviews_amazon, $reviews_lt);
+					$array_rat = array_merge_recursive($ratings_anobii, $ratings_amazon, $ratings_lt);
+					$array_maxrat = array_merge_recursive($maxratings_anobii, $maxratings_amazon, $maxratings_lt);
+					$array_minrat = array_merge_recursive($minratings_anobii, $minratings_amazon, $minratings_lt);
+					
+					$model_rev = getRDFReview($array_rev, $array_users, $array_rat, $array_maxrat, $array_minrat, $isbn);
+					$model->addModel($model_rev);
+				}						
+			}		
+			
+			if ($socialdatasource != "all") { // && $socialdatasource != "amazon" && $socialdatasource != "anobii" && $socialdatasource != "librarything") {
+				$model = getRDFFilterByValue($model, $isbn, $datatype, $socialtype, $socialdatasource);
+			}
+			
+			if (!$model->isEmpty()) {
+				$model->saveAs(RDF_REPOSITORY . $isbn . ".rdf"); 			
+				$data = file_get_contents(RDF_REPOSITORY . $isbn. '.rdf');
+				$contents = str_replace('<![CDATA[', '', $data);
+				$contents = str_replace(']]>', '', $contents);
+				unlink(RDF_REPOSITORY . $isbn. '.rdf');
+			} else
+				$contents = "<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' />";	
+			
+		}
+	}
+	header('Content-Type: text/xml; charset=ISO-8859-1');
+	echo $contents;   
+			
+?>

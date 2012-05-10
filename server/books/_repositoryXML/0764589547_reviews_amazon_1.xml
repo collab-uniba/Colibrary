@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<result>
+	<isbn>0764589547</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Nathan Smith</user>
+	<review>
+
+If you are looking for a good book describing how to make use of the various web services out there, look no further. Professional Web APIs with PHP is a compliation of several helpful tutorials covering the more popular web application programming interfaces (API) available. It was written by the talented Paul Michael Reinheimer, who is a Zend Certified Engineer and member of the PHP Security Consortium. He has done a great job covering what at times seems to be a somewhat esoteric topic. In his own words, here is the approach taken in this book:"Every time I approached a new API, I was spending 80% of my time trying just trying to make the first call or two. Once those were out of the way subsequent calls were fast, and in many cases almost trivial to write. So I slowly refactored my book into a tool to help developers get through those first few difficult calls..."I appreciated his dive-right-in approach to understanding the differing APIs. Considering that some of the large scale API documentation totals in the range of 500 pages each, the brevity and clarity of the book's explanations were a welcome contrast. He also covered some of the differences between REST and SOAP, and why some APIs give preference to one over the other.The main APIs that are addressed are those which tend to be thought of as large and revenue driven - eBay, Google, PayPal, Amazon and FedEx. Other community oriented APIs such as Flickr and Del.icio.us are also covered, as well as the National Weather Service. As a lead in to all these topics, he covers the parsing of basic web feed formats like RSS and Atom, in order to give a general feel for dealing with XML data. Towards the end of the book, the necessary methods for creating your own API are demystified.Another thing I liked is that this book doesn't spread itself too thin, attempting to be the end-all for API instruction by covering a smorgasbord of server side languages. Rather, it focuses solely on PHP and does quite a fine job of it. I find that approach so much more helpful. The likelihood of someone knowing one language well, and wanting to learn a variety of APIs is much better than someone wanting to learn a few APIs, in a ridiculous number of languages.His site tagline says it best: "PHP: Because friends don't let friends code Java."Reinheimer does well by avoiding the absurdity which plagues far too many programming books, instead opting to focus on what is applicable from a practical standpoint. So, whether you are looking to create an online book store that interfaces with Amazon, sell your own products via PayPal, or ship FedEx products that need to be tracked on the web, this book is for you. The thoroughly explained examples will get you on the right track in no time.
+      </review>
+	<rating>5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss10.gif</imgrating>
+	<isbn>0764589547</isbn>
+	<tag/>
+	<occurrences/>
+	<user>John Matlock "Gunny"</user>
+	<review>
+
+First note that the title of this book says 'PHP.' Everything in the book is oriented around PHP. If your bag is Java, or ASP.NET, or Cold Fusion, or Rails; go elsewhere. (If you are thinking about which of these to use I recommend you investigate PHP and Rails running on one of the Linux OS's before making a decision.) Having said that, this is a most helpful book on getting started on using the web services provided by eBay, Google, Paypal, Amazon and FedEx. Web services API's provide for a standardized way that the host allows you to use your computer to go extract information from them for (usually) display on your own web site. The author is absolutely correct when he says that the hardest thing about any of these API's is making the first couple of calls. The documentation provided by the the hosting company is horrendous, often hundreds of pages long. This book leads you through the most commonly used, getting you started. After that you will find that getting to the rest of their services is fairly easy. All in all, if you are planning to use web services on any of these hosts, this book will save you a tremendous amount of time and effort in getting started.
+      </review>
+	<rating>5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss10.gif</imgrating>
+	<isbn>0764589547</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Joern Heller</user>
+	<review>
+
+Web APIs will become more and more interesting as they provide quick and easy access to data and functions from widely known web service providers auch as Google, eBay and others. However, this book can only provide an overview - "making the first API call". It is therefore useable for beginner s.The book is easy to read, helpful for the first steps and conatins enough scripts and examples to understand the features and see the possibilities for extension.All together, useful but not detailed.
+      </review>
+	<rating>3</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss6.gif</imgrating>
+	<isbn>0764589547</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Chuck Brooks "President, FutureWare SCG"</user>
+	<review>
+
+The overviews are also excellent for concise functional descriptions that can be read by anyone with a general technical background. In sharp contrast to most technical books of this nature, this one is well organized, well written and very readable. It uses the PHP programming script/language to delve into specific implementation details, but the information can be readily understood regardless of the reader's specific language of choice. The material is presented in two sections. The first section in four chapters provides a general foundation in web services (or Service Oriented Architecture to use current technoabble). The second section in eight chapters describes specific uses and conventions for these services provided by the major companies of the New Economy, who are driving these technologies as engines of commerce. This field is an amalgam of several technologies, each with a huge supporting literature, and one of the more remarkable things about this book is the degree of editing it took to bring to the forefront those items that can immediately be used. Well worth the investment.Those working on the PayPal services should also acquire 'Pro PayPal eCommerce' by Damon Williams as an excellent companion reference.Pro PayPal E-Commerce (Expert's Voice)
+      </review>
+	<rating>5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss10.gif</imgrating>
+	<isbn>0764589547</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Veign "Chris"</user>
+	<review>
+
+This book does what I like in a book.  Deliver great information on a specific topic without trying to be the do-all-end-all book.  It focus's on API's with PHP and does a great job at doing so.  Different chapters cover different API's with a catch all chapter at the end to cover additional popular API (like National Weather Service and Flickr).This is the kind of book where its just fun to play around with and see what you can come up with.
+      </review>
+	<rating>5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss10.gif</imgrating>
+	<isbn>0764589547</isbn>
+	<tag/>
+	<occurrences/>
+	<user>C. Arnold</user>
+	<review>
+
+I approached this book expecting a reasonably good tech cookbook with some code examples I could put to use.  This book is that, plus more.  The book gives a very good background of web APIs, plus thoughtful discussion about -why- certain items are done a certain way.  For example, discussion about non-trivial security matters, and various reasons why you wouldn't want to produce a web feed (followed, of course, by how you would produce a web feed, in various flavors).For me, this book very successfully balanced the dual goals "give me the nuts and bolts" and "tell me the background behind it all".  This book will not teach you PHP, so if you are a beginner, start with a more general PHP tutorial.  Beyond that, I recommend this book.
+      </review>
+	<rating>5</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss10.gif</imgrating>
+	<isbn>0764589547</isbn>
+	<tag/>
+	<occurrences/>
+	<user>Derek Martin</user>
+	<review>
+
+To be fair, it does cover most things, and is quite well written (though a bit thinner than most other WROX volumes).Unfortunately, it didn't cover the *one* thing I hoped it would cover, which was my main reason for purchasing the book -- authenticating API clients.
+      </review>
+	<rating>3</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss6.gif</imgrating>
+	<isbn>0764589547</isbn>
+	<tag/>
+	<occurrences/>
+	<user>F. Zeidan "www.fadizeidan.com"</user>
+	<review>
+
+If you are looking for quick reference and example of each listed topic, then this book is a good start.It is not a terrible book, just not such a great resource. You can find the same information if not more in couple of hours online, and chances are you won't use it much.The book covers how to connect to each of the services and retrieves the data. I purchased it mainly for the Amazon API, and I can say it was lacking at best.It pretty much explained REST and SOUP calls, what the parameters to pass with few examples. Something you can find anywhere online and there are definitely better books out there.If you want quick reference to different type of services and how to make REST or SOUP calls in one book, then get a used copy of it, but honestly I would not buy it again, and I am a book junkie who collects books for reference.
+      </review>
+	<rating>2</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss4.gif</imgrating>
+	<isbn>0764589547</isbn>
+	<tag/>
+	<occurrences/>
+	<user>J. Lenglet</user>
+	<review>
+
+This book asumes you are already a programmer. There is no explaination of how to but rather a look at some API's out there. If you do not already know how to work with API's you will be lost. Of course if you already knew how to work with API in PHP you wouldnt have bought the book!
+      </review>
+	<rating>1</rating>
+	<minrating>0.5</minrating>
+	<maxrating>5</maxrating>
+	<imgrating>http://www.librarything.com/pics/ss2.gif</imgrating>
+</result>
